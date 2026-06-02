@@ -120,7 +120,27 @@ http_requests_total{method="GET", status_code="200", endpoint="/api/users"} 1042
           </p>
         </section>
 
-        {sections.slice(2).map(s => (
+        <section id="our-solution">
+          <h2>Our Solution</h2>
+
+          <h3>Self Hosted OSS Platform with Cardinality Control</h3>
+          <p>
+            Trickl aims to sit somewhere between Managed OSS Platform and Self Hosted OSS Tools by
+            assisting small development teams in setting up their own self-hosted OSS platform.
+            Normally, this process could take weeks, but with Trickl, the entire process is complete
+            in 30 minutes. The user provides their AWS information, and Trickl will provision all the
+            services needed on a VPS right in their own AWS environment.
+          </p>
+          <p>
+            On top of assisting the user with the setup process, Trickl also adds a Cardinality
+            Control system, "Smart Metrics", to mitigate Cardinality Explosion. By reviewing the
+            queries made in Grafana by the user and the volume of time series being created by a
+            single metric, our Smart Metrics system is able to make recommendations to the user
+            where they could reduce Cardinality in their Time Series Database.
+          </p>
+        </section>
+
+        {sections.slice(3).map(s => (
           <section key={s.id} id={s.id}>
             <h2>{s.label}</h2>
           </section>
