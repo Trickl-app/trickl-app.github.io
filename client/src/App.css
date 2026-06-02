@@ -74,11 +74,86 @@
 
 .home-features {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
+
   gap: 1.5rem;
   padding: 3rem 2rem;
   max-width: 1100px;
   margin: 0 auto;
+}
+
+.feature-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.feature-caption {
+  font-size: 0.95rem;
+  color: var(--color-text);
+  text-align: center;
+  margin: 0;
+}
+
+.home-team {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: calc(100vh - 80px);
+  padding: 3rem 2rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.team-title {
+  text-align: center;
+  font-size: 3rem;
+  margin-bottom: 2rem;
+  color: var(--color-primary);
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+
+.team-name {
+  text-align: center;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  margin: 0.5rem 0 0;
+  letter-spacing: 0.01em;
+}
+
+.team-badges {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.team-badge {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  border-radius: 6px;
+}
+
+.team-badge--github {
+  width: 28px;
+  height: 28px;
+}
+
+.team-location {
+  text-align: center;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--color-primary);
+  margin: 0.2rem 0 0;
+  letter-spacing: 0.01em;
 }
 
 .feature-card {
@@ -90,7 +165,7 @@
 
 .feature-image-placeholder {
   width: 100%;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 3 / 4;
   background: var(--blue-light);
 }
 
