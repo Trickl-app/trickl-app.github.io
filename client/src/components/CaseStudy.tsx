@@ -1,151 +1,249 @@
+import { useState, useRef } from 'react'
+
 const sections = [
-  { id: 'introduction', label: 'Introduction' },
-  { id: 'existing-solutions', label: 'Existing Solutions' },
-  { id: 'our-solution', label: 'Our Solution' },
-  { id: 'architecture', label: 'Architecture' },
-  { id: 'security', label: 'Security' },
-  { id: 'trade-offs-and-challenges', label: 'Trade-offs and Challenges' },
-  { id: 'future-work', label: 'Future Work' },
+  {
+    id: 'introduction',
+    label: 'Introduction',
+    subsections: [],
+  },
+  {
+    id: 'problem-domain',
+    label: 'Problem Domain',
+    subsections: [
+      { id: 'what-is-observability', label: 'What is Observability?' },
+      { id: 'what-are-metrics', label: 'What are Metrics, really?' },
+      { id: 'how-are-metrics-stored', label: 'How are Metrics Stored?' },
+    ],
+  },
+  {
+    id: 'building-trickl',
+    label: 'Building Trickl',
+    subsections: [
+      { id: 'our-approach', label: 'Our Approach' },
+    ],
+  },
+  {
+    id: 'design-decisions',
+    label: 'Design Decisions & Tradeoffs',
+    subsections: [],
+  },
+  {
+    id: 'future-work',
+    label: 'Future Work',
+    subsections: [],
+  },
 ]
 
+function IntroductionSection() {
+  return (
+    <>
+      <h2>Introduction</h2>
+      <p>
+        Trickl is an open-source metrics observability platform built for small development teams
+        who want full visibility into their systems without the cost or complexity of managed
+        solutions. It bundles a production-ready telemetry pipeline — collection, storage, and
+        visualization — and deploys it directly into your own AWS environment in under 30 minutes.
+      </p>
+      <p>
+        On top of the core pipeline, Trickl includes a "Smart Metrics" system that actively monitors
+        cardinality growth and surfaces recommendations to keep your time series database lean. This
+        case study walks through why we built it, how it works, and the decisions we made along the way.
+      </p>
+    </>
+  )
+}
+
+function ProblemDomainSection() {
+  return (
+    <>
+      <h2>Problem Domain</h2>
+
+      <h3 id="what-is-observability">What is Observability?</h3>
+      <p>
+        After an application transitions from development to production, and grows in complexity
+        and/or traffic, troubleshooting becomes increasingly more challenging. Bugs that you weren't
+        aware of come into focus, and inefficiencies are highlighted when the system is under
+        increased stress. In order to meaningfully deduce the root causes of what you're
+        investigating, you need empirical evidence, i.e. data about the system that a developer may
+        use to analyse problems.
+      </p>
+      <p>
+        Telemetry data is typically emitted in the form of logs, metrics, and traces, which provide
+        teams with valuable insight into how their system is operating at any given time across
+        different dimensions. Traces follow user requests across different components as they
+        propagate through the system; logs are written records of events that occurred; and metrics
+        are numerical measurements of behaviour/state collected over time, sort of like vital signs.
+      </p>
+      <p>
+        Good observability practices allow you to optimize your system and improve user experience,
+        while streamlining the discovery process that is involved in identifying bottlenecks or bugs.
+      </p>
+      <p>
+        Conversely, poor observability practices can degrade the user experience over time (as you
+        fail to rectify bottlenecks and bugs in your burgeoning system in a timely manner).
+        Additionally, if your observability implementation is done haphazardly, you'll now have a
+        second, cumbersome system to take care of.
+      </p>
+
+      <h3 id="what-are-metrics">What are Metrics, really?</h3>
+      <p>Metrics define the scope of this platform.</p>
+      <p>
+        Metrics measure the numerical state of a system over time. They are your system's vital
+        signs (often appearing on dashboards that look like electrocardiograms). When queried
+        effectively, they provide critical insight into identifying performance issues, and
+        understanding system behaviours; equipping developers to make decisions that will improve
+        system performance.
+      </p>
+      <div className="cs-placeholder">Image: A typical metric graph</div>
+      <p>
+        Every engineering team's observability needs are different, but certain metrics are
+        universally important.
+      </p>
+      <ul>
+        <li><strong>Latency</strong>; the time it takes for data to travel from one point to another.</li>
+        <li><strong>Traffic</strong>; the volume of requests or transactions a system can/is processing.</li>
+        <li><strong>Errors</strong>; information about failed requests or processes.</li>
+        <li><strong>Saturation</strong>; monitoring resource utilization.</li>
+      </ul>
+      <p>
+        Instrumenting your applications to produce these metrics is, however, only part of the
+        challenge. Once your system begins emitting metrics, these samples need to be transported
+        and stored in an appropriate manner, while remaining affordable as the system grows. At any
+        point in time the volume of emitted samples can spike (for reasons we'll explain later) in
+        such a way as to overwhelm your storage solution; if this were to occur during a critical
+        time, your discovery process will be impeded, if not outright halted.
+      </p>
+      <div className="cs-placeholder">Quotes &amp; statistics: the cost of managed observability</div>
+
+      <h3 id="how-are-metrics-stored">How are Metrics Stored?</h3>
+      <p>
+        Metrics are composed of the metric's name, its labels (which are a set of key value pairs),
+        and an arbitrary numerical value which represents a measurement of a given type, at a
+        specific time. Knowing how much memory is being used at any given time tells you something,
+        but without the context of knowing how memory usage has changed over the past minute, hour,
+        day or week, that single value is of little use. A time-series is a sequence of a particular
+        label set for a metric (and its value) tracked over time. Therefore, every distinct
+        combination of a metric name and its labels produces a separate time series to be stored and
+        tracked; these time-series are what you usually see displayed on a dashboard. To store and
+        query time-series data efficiently, you use a time-series database (TSDB), which tracks the
+        changing values for that particular time-series chronologically. TSDBs are built in such a
+        way that they can efficiently ingest, store and query large amounts of timestamped, numerical
+        data points, making them the obvious choice for the observation of metrics.
+      </p>
+      <div className="cs-placeholder">Image: The shape of typical time-series data</div>
+      <p>
+        As you'll see, even if you've instrumented your apps thoughtfully and have chosen an
+        optimised, deliberate storage solution, you can run into significant issues.
+      </p>
+    </>
+  )
+}
+
+function BuildingTricklSection() {
+  return (
+    <>
+      <h2>Building Trickl</h2>
+
+      <h3 id="our-approach">Our Approach</h3>
+      <p>
+        Trickl aims to sit somewhere between Managed OSS Platform and Self-Hosted OSS Tools by
+        assisting small development teams in setting up their own self-hosted OSS platform.
+        Normally this process could take weeks, but with Trickl, the entire process is complete
+        in 30 minutes. The user provides their AWS information, and Trickl provisions all the
+        services needed on a VPS right in their own AWS environment.
+      </p>
+      <p>
+        On top of assisting the user with the setup process, Trickl also adds a Cardinality
+        Control system, "Smart Metrics", to mitigate Cardinality Explosion. By reviewing the
+        queries made in Grafana by the user and the volume of time series being created by a
+        single metric, our Smart Metrics system is able to make recommendations to the user
+        where they could reduce Cardinality in their Time Series Database.
+      </p>
+    </>
+  )
+}
+
+function DesignDecisionsSection() {
+  return (
+    <>
+      <h2>Design Decisions &amp; Tradeoffs</h2>
+      <p>Coming soon.</p>
+    </>
+  )
+}
+
+function FutureWorkSection() {
+  return (
+    <>
+      <h2>Future Work</h2>
+      <p>Coming soon.</p>
+    </>
+  )
+}
+
+const sectionComponents: Record<string, React.FC> = {
+  'introduction': IntroductionSection,
+  'problem-domain': ProblemDomainSection,
+  'building-trickl': BuildingTricklSection,
+  'design-decisions': DesignDecisionsSection,
+  'future-work': FutureWorkSection,
+}
+
 function CaseStudy() {
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const contentRef = useRef<HTMLDivElement>(null)
+
+  const goToSection = (index: number) => {
+    setCurrentIndex(index)
+    contentRef.current?.scrollTo({ top: 0 })
+  }
+
+  const section = sections[currentIndex]
+  const SectionContent = sectionComponents[section.id]
+  const nextSection = sections[currentIndex + 1] ?? null
+
   return (
     <div className="case-study-layout">
       <nav className="case-study-sidenav">
         <ul>
-          {sections.map(section => (
-            <li key={section.id}>
-              <a href={`#${section.id}`}>{section.label}</a>
+          {sections.map((s, i) => (
+            <li key={s.id}>
+              <button
+                className={`sidenav-btn${i === currentIndex ? ' active' : ''}`}
+                onClick={() => goToSection(i)}
+              >
+                {s.label}
+              </button>
             </li>
           ))}
         </ul>
       </nav>
 
-      <main className="case-study-content">
-        <section id="introduction">
-          <h2>Introduction</h2>
-          <p>
-            Trickl is an open-source, easy to install metrics observability pipeline for small sized
-            development teams. It uses an array of existing open-source observability tools in
-            conjunction with a custom built "smart metrics" system that works to reduce cardinality
-            explosion.
-          </p>
+      <main ref={contentRef} className="case-study-content">
+        <SectionContent />
 
-          <h3>Engineering Domain - Metrics Observability</h3>
-          <p>
-            Observability of applications is the ability to inspect a software system's internal
-            state by collecting and analyzing the telemetry data that is output by the application.
-            This helps us as developers further understand the reasons for a system's state, rather
-            than just the state itself. Instead of asking "Is the application working?", we can ask
-            "WHY is the application slow or broken?" and more importantly, "How do I fix it?".
-          </p>
-          <p>
-            There are 3 types of data collected from an application that we use to observe an
-            application: Metrics, Logs and Traces. Although all 3 are essential for successful
-            observability of an application, the pillar Trickle is concerned with is metrics.
-            Metrics measure the numerical state of a system over time. It tries to answer questions
-            like "How much?", "How often?" or "How fast?". Examples include resource usage (CPU,
-            memory), traffic (requests per second, active connections), errors (error rate, failed
-            requests), or latency of operations. Metrics use labels to specify context, such as
-            which CPU is being measured, or what method an HTTP request is using.
-          </p>
-          <pre><code>{`cpu_usage_percent{host="web-server-01", cpu="0", mode="user"} 23.5
-http_requests_total{method="GET", status_code="200", endpoint="/api/users"} 1042`}</code></pre>
-
-          <h3>Subproblem - Cardinality Explosion</h3>
-          <p>
-            Metrics are stored in a time series database where they are tracked as a time series.
-            The time series keeps track of how a metric's value changes over time. Each metric that
-            contains a unique combination of metric name and label values results in a new time
-            series being created - this is called "Cardinality". The result of cardinality left
-            unchecked is something called "Cardinality Explosion", which refers to an ever
-            increasing amount of new time series being created. This can happen when a label is
-            added to a metric that could possibly contain an infinite or extremely large number of
-            values.
-          </p>
-        </section>
-
-        <section id="existing-solutions">
-          <h2>Existing Solutions</h2>
-          <p>We've identified three categories of existing solutions to this domain:</p>
-          <ul>
-            <li>End-to-end Managed Platforms</li>
-            <li>Managed OSS Platforms</li>
-            <li>Self-Hosted OSS Tools</li>
-          </ul>
-
-          <h3>End-to-end Managed Platforms</h3>
-          <p>
-            End-to-end managed platforms like Datadog, New Relic, and Dynatrace handle the entire
-            observability pipeline, from instrumentation SDKs and data collection, all the way
-            through to storage, querying, and visualization dashboards. These platforms are built on
-            proprietary software, meaning you couldn't take their codebase and run it yourself even
-            if you wanted to. The value proposition is simplicity and richness of features; you sign
-            up, install their agent, and everything works. The tradeoffs are cost, which scales with
-            usage and can become significant at production scale, and data ownership, as your
-            telemetry data lives on the vendor's servers rather than your own infrastructure.
-            Switching providers also means starting largely from scratch, as your historical data and
-            dashboards are tied to their proprietary systems.
-          </p>
-
-          <h3>Managed OSS Platforms</h3>
-          <p>
-            Managed OSS platforms like Grafana Cloud and Chronosphere provide a similar end-to-end
-            experience, but are built entirely on open source software rather than proprietary tools.
-            Grafana Cloud for instance is built on Mimir for metrics, Loki for logs, Tempo for
-            traces, and Grafana for visualization, all of which are freely available open source
-            projects. The distinction from end-to-end managed platforms is that the underlying
-            software is transparent, vendor-neutral, and compatible with open standards like
-            OpenTelemetry and PromQL. You are not locked into a proprietary data format, and you
-            could in theory migrate to a self hosted setup using the same tools. Like end-to-end
-            managed platforms however, your data still lives on the vendor's servers and you pay
-            ongoing usage fees, typically per active metric series, per volume of logs ingested, and
-            per volume of traces ingested.
-          </p>
-
-          <h3>Self-Hosted OSS Tools</h3>
-          <p>
-            Self hosted OSS tools are the raw ingredients that developers have at their disposal
-            when they want full control over their observability stack without using proprietary
-            software. This category includes tools like Prometheus, Mimir, VictoriaMetrics, Loki,
-            Tempo, Grafana, and the OpenTelemetry Collector, all of which are freely available and
-            production grade. Notably these are the same tools that managed OSS platforms like
-            Grafana Cloud are built on top of. The difference is that with self hosted OSS tools,
-            your team is responsible for provisioning the infrastructure, configuring each component,
-            tuning performance settings, wiring everything together, and maintaining it all ongoing.
-            The setup process can take days to weeks, and the operational burden doesn't end at
-            deployment; scaling, upgrades, and incident response all fall on your team. The upside
-            is complete data ownership, no usage based fees beyond your own infrastructure costs,
-            and full flexibility to configure the stack exactly as you need it.
-          </p>
-        </section>
-
-        <section id="our-solution">
-          <h2>Our Solution</h2>
-
-          <h3>Self Hosted OSS Platform with Cardinality Control</h3>
-          <p>
-            Trickl aims to sit somewhere between Managed OSS Platform and Self Hosted OSS Tools by
-            assisting small development teams in setting up their own self-hosted OSS platform.
-            Normally, this process could take weeks, but with Trickl, the entire process is complete
-            in 30 minutes. The user provides their AWS information, and Trickl will provision all the
-            services needed on a VPS right in their own AWS environment.
-          </p>
-          <p>
-            On top of assisting the user with the setup process, Trickl also adds a Cardinality
-            Control system, "Smart Metrics", to mitigate Cardinality Explosion. By reviewing the
-            queries made in Grafana by the user and the volume of time series being created by a
-            single metric, our Smart Metrics system is able to make recommendations to the user
-            where they could reduce Cardinality in their Time Series Database.
-          </p>
-        </section>
-
-        {sections.slice(3).map(s => (
-          <section key={s.id} id={s.id}>
-            <h2>{s.label}</h2>
-          </section>
-        ))}
+        {nextSection && (
+          <button className="next-section-card" onClick={() => goToSection(currentIndex + 1)}>
+            <span className="next-section-label">Next</span>
+            <span className="next-section-title">
+              {nextSection.label} <span className="next-section-arrow">→</span>
+            </span>
+          </button>
+        )}
       </main>
+
+      {section.subsections.length > 0 && (
+        <aside className="case-study-on-this-page">
+          <p className="on-this-page-title">On this page</p>
+          <ul>
+            {section.subsections.map(sub => (
+              <li key={sub.id}>
+                <a href={`#${sub.id}`}>{sub.label}</a>
+              </li>
+            ))}
+          </ul>
+        </aside>
+      )}
     </div>
   )
 }

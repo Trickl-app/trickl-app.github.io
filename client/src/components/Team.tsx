@@ -6,10 +6,9 @@ function Team() {
     <div className="home-team" id="team">
       <h2 className="team-title">Meet the Team</h2>
       <div className="team-grid">
-        <div className="feature-item">
-          <div className="feature-card">
-            <div className="feature-image-placeholder" />
-          </div>
+
+        <div className="team-member">
+          <div className="team-photo-card" />
           <p className="team-name">Ian Lewis</p>
           <p className="team-location">North Carolina, USA</p>
           <div className="team-badges">
@@ -21,10 +20,8 @@ function Team() {
             </a>
           </div>
         </div>
-        <div className="feature-item">
-          <div className="feature-card">
-            <div className="feature-image-placeholder" />
-          </div>
+        <div className="team-member">
+          <div className="team-photo-card" />
           <p className="team-name">Syed Shah</p>
           <p className="team-location">London, England</p>
           <div className="team-badges">
@@ -36,10 +33,8 @@ function Team() {
             </a>
           </div>
         </div>
-        <div className="feature-item">
-          <div className="feature-card">
-            <div className="feature-image-placeholder" />
-          </div>
+        <div className="team-member">
+          <div className="team-photo-card" />
           <p className="team-name">Nazeer Shaikh</p>
           <p className="team-location">Florida, USA</p>
           <div className="team-badges">
@@ -51,10 +46,8 @@ function Team() {
             </a>
           </div>
         </div>
-        <div className="feature-item">
-          <div className="feature-card">
-            <div className="feature-image-placeholder" />
-          </div>
+        <div className="team-member">
+          <div className="team-photo-card" />
           <p className="team-name">Jonathon Norrie</p>
           <p className="team-location">Toronto, Canada</p>
           <div className="team-badges">

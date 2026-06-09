@@ -1,23 +1,29 @@
 :root {
-  /* From the logo */
-  --blue-deep:    #1a5fa8;  /* "Trickl" text */
-  --blue-mid:     #4a9fd4;  /* water */
-  --blue-light:   #c6e4f5;  /* sky */
-  --green:        #2d6a2d;  /* trees */
-  --orange:       #f5a020;  /* sun */
-  --brown:        #7a4a2a;  /* beaver / logs */
+  --navy:         #060d1f;
+  --navy-mid:     #0a1628;
+  --blue-deep:    #1e3a8a;
+  --blue-mid:     #2563eb;
+  --blue-accent:  #3b82f6;
+  --blue-glow:    rgba(59, 130, 246, 0.25);
 
-  /* Semantic tokens */
-  --color-primary:    var(--blue-deep);
-  --color-accent:     var(--blue-mid);
-  --color-highlight:  var(--orange);
+  --color-bg:         var(--navy);
+  --color-surface:    rgba(255, 255, 255, 0.04);
+  --color-border:     rgba(255, 255, 255, 0.08);
 
-  --color-bg:         #f4f8fc;
+  --color-text:       #f0f6ff;
+  --color-text-muted: rgba(200, 220, 255, 0.65);
+  --color-primary:    var(--blue-accent);
+}
+
+[data-theme="light"] {
+  --color-bg:         #f0f6ff;
   --color-surface:    #ffffff;
-  --color-border:     #cfe0ee;
-
-  --color-text:       #0f2235;
+  --color-border:     #d6e4f5;
+  --color-text:       #0d1f3c;
   --color-text-muted: #4a6580;
+  --color-primary:    #2563eb;
+  --navy-mid:         #e8f0fb;
+  --blue-glow:        rgba(37, 99, 235, 0.12);
 }
 
 *, *::before, *::after {
@@ -33,9 +39,9 @@ body {
 
 h1, h2, h3 {
   margin: 0 0 0.5rem;
-  font-weight: 600;
-  line-height: 1.2;
-  color: var(--color-primary);
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--color-text);
 }
 
 p {
