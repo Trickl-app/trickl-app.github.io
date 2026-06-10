@@ -1,5 +1,9 @@
 import linkedinLogo from '../assets/linkedin-logo.webp'
 import githubLogo from '../assets/github-logo.svg'
+import ianPhoto from '../assets/ian.jpeg'
+import jonPhoto from '../assets/jon.jpeg'
+import nazeerPhoto from '../assets/nazeer.jpeg'
+import syedPhoto from '../assets/syed.jpeg'
 
 function Team() {
   return (
@@ -8,7 +12,7 @@ function Team() {
       <div className="team-grid">
 
         <div className="team-member">
-          <div className="team-photo-card" />
+          <img src={ianPhoto} alt="Ian Lewis" className="team-photo-card" />
           <p className="team-name">Ian Lewis</p>
           <p className="team-location">North Carolina, USA</p>
           <div className="team-badges">
@@ -21,9 +25,9 @@ function Team() {
           </div>
         </div>
         <div className="team-member">
-          <div className="team-photo-card" />
+          <img src={syedPhoto} alt="Syed Shah" className="team-photo-card" />
           <p className="team-name">Syed Shah</p>
-          <p className="team-location">London, England</p>
+          <p className="team-location">The Shadow Realm</p>
           <div className="team-badges">
             <a href="https://www.linkedin.com/in/syed-shah-367a44393/" target="_blank" rel="noreferrer">
               <img src={linkedinLogo} alt="LinkedIn" className="team-badge" />
@@ -34,7 +38,7 @@ function Team() {
           </div>
         </div>
         <div className="team-member">
-          <div className="team-photo-card" />
+          <img src={nazeerPhoto} alt="Nazeer Shaikh" className="team-photo-card" />
           <p className="team-name">Nazeer Shaikh</p>
           <p className="team-location">Florida, USA</p>
           <div className="team-badges">
@@ -47,7 +51,7 @@ function Team() {
           </div>
         </div>
         <div className="team-member">
-          <div className="team-photo-card" />
+          <img src={jonPhoto} alt="Jonathon Norrie" className="team-photo-card" />
           <p className="team-name">Jonathon Norrie</p>
           <p className="team-location">Toronto, Canada</p>
           <div className="team-badges">

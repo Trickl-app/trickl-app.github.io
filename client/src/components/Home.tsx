@@ -1,7 +1,10 @@
 import { useLayoutEffect } from 'react'
 import { Link } from 'react-router-dom'
 import tricklIcon from '../assets/blue-transparent_background.svg'
+import archDark from '../assets/home_page_dark.gif'
+import archLight from '../assets/home_page_light.gif'
 import Team from './Team'
+import Technologies from './Technologies'
 
 const features = [
   {
@@ -57,7 +60,7 @@ const features = [
   },
 ]
 
-function Home() {
+function Home({ theme }: { theme: 'dark' | 'light' }) {
   useLayoutEffect(() => {
     if (window.location.hash) {
       document.querySelector(window.location.hash)?.scrollIntoView()
@@ -77,7 +80,7 @@ function Home() {
               Metrics<br />Observability<br />in Minutes
             </h1>
             <p className="hero-sub">
-              Open-source metrics observability for small teams — self-hosted on your own infrastructure, with intelligent cardinality control built in.
+              Open-source metrics observability for small teams; self-hosted on your own infrastructure, with intelligent cardinality control built in.
             </p>
             <Link to="/case-study" className="btn-primary">
               Read our Case Study <span className="btn-arrow">→</span>
@@ -86,15 +89,16 @@ function Home() {
         </div>
       </section>
 
-      <section className="features" id="features">
-        <div className="features-inner">
-          {features.map(f => (
-            <div className="feature-card" key={f.title}>
-              <div className="feature-icon">{f.icon}</div>
-              <h3 className="feature-title">{f.title}</h3>
-              <p className="feature-desc">{f.desc}</p>
-            </div>
-          ))}
+      <section className="tech-section-bg">
+        <Technologies />
+      </section>
+
+      <section className="arch-section">
+        <div className="arch-inner">
+          <p className="arch-caption">
+            Trickl deploys a full backend that receives metrics from your instrumented apps, applies intelligent cardinality control recommendations, and surfaces everything through a Grafana front end, all on your own infrastructure.
+          </p>
+          <img src={theme === 'dark' ? archDark : archLight} alt="Trickl architecture diagram" className="arch-gif" />
         </div>
       </section>
 
