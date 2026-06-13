@@ -432,6 +432,64 @@
   background: var(--color-surface);
 }
 
+.cs-stat-callout {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  max-width: 480px;
+  margin: 1.75rem 0;
+  padding: 1.5rem 2rem;
+  border-left: 4px solid var(--color-accent, #4f8ef7);
+  background: var(--color-surface);
+  border-radius: 0 8px 8px 0;
+}
+
+.cs-stat-number {
+  font-size: 3.5rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--color-accent, #4f8ef7);
+}
+
+.cs-stat-text {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--color-text);
+}
+
+.cs-stat-source {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+
+.cs-figure {
+  margin: 1.5rem 0;
+  max-width: 720px;
+}
+
+.cs-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.cs-image--half {
+  width: 50%;
+}
+
+.cs-image--three-quarter {
+  width: 75%;
+}
+
+.cs-caption {
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+
 /* Next section card */
 .next-section-card {
   display: flex;
@@ -592,7 +650,8 @@
   border: 1px solid var(--color-border);
   border-radius: 20px;
   padding: 18px;
-  transition: border-color 0.2s, background 0.2s;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
 }
 
 .tech-card:hover .tech-icon-wrap {
