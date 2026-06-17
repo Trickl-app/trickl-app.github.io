@@ -408,7 +408,7 @@ function BuildingTricklSection() {
         pipeline and a Smart-Metrics Service (SMS).
       </p>
       <figure className="cs-figure">
-        <img src={smartmetricsPipeline} alt="Smart Metrics pipeline diagram" className="cs-image cs-image--three-quarter" />
+        <img src={smartmetricsPipeline} alt="Smart Metrics pipeline diagram" className="cs-image" />
         <figcaption className="cs-caption">An overview of Trickl's architecture.</figcaption>
       </figure>
 
