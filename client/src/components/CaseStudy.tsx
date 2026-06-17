@@ -3,6 +3,10 @@ import typicalMetricsDashboard from '../assets/typical_metrics_dashboard.png'
 import telemetry from '../assets/telemetry.png'
 import cardinalityExplosionGraph from '../assets/cardinality_explosion_graph.png'
 import basicBackend from '../assets/basic_backend.gif'
+import timeSeriesEx from '../assets/time-series-ex.png'
+import exampleTimeseriesDist from '../assets/example-timeseries-dist.png'
+import tricklLandscapeComparison from '../assets/trickl-landscape comparison-dark.png'
+import smartmetricsPipeline from '../assets/smartmetrics-pipeline.gif'
 
 const sections = [
   {
@@ -35,6 +39,10 @@ const sections = [
     label: 'Building Trickl',
     subsections: [
       { id: 'our-approach', label: 'Our Approach' },
+      { id: 'metrics-pipeline', label: 'Metrics Observability Pipeline' },
+      { id: 'smart-metrics-service', label: 'Smart Metrics Service' },
+      { id: 'cloud-infrastructure', label: 'Cloud Infrastructure' },
+      { id: 'observing-observability', label: 'Observing Observability' },
     ],
   },
   {
@@ -72,15 +80,20 @@ function ProblemDomainSection() {
 
       <h3 id="what-is-observability">What is Observability?</h3>
       <p>
-        As an application transitions from development to production and complexity and traffic begin to grow,
-        troubleshooting becomes increasingly more challenging. Previously unknown bugs become apparent, and
-        inefficiencies are highlighted when the system is placed under increased stress. In order to meaningfully
-        deduce the root causes and preemptively identify potential issues, empirical evidence is required (i.e. data)
-        to drive investigation. Naturally, this data would be emitted from (or alongside) the application itself.
-        Observability is the collection and analysis of this data. A good rule of thumb to measure the efficacy of
-        an observability implementation is if it allows one to understand any system state the application may have
-        produced (even ones that couldn’t be predicted), without having to understand or update the internal state
-        of the system being observed (i.e. without changing the code).
+        As an application transitions from development to production and complexity and traffic begin to grow, 
+        troubleshooting becomes increasingly more challenging. Placing the system under increased stress exposes 
+        previously unknown bugs and uncovers inefficiencies. To find root causes and predict future issues, 
+        investigators need empirical data. Naturally, this data would be emitted from (or alongside) the application itself. 
+      </p>
+      <p>
+        Observability is the collection and analysis of this data. A good rule of thumb to measure the efficacy of an 
+        observability implementation is if it allows one to understand any system state the application may have produced
+         (even ones that couldn’t be predicted), without having to understand or update the internal state of the system 
+         being observed (i.e. without changing the code). 
+      </p>
+      <p>
+        By following best practices when it comes to observability, the system can be optimized (improving user experience),
+         while streamlining the discovery process for identifying bottlenecks or bugs. 
       </p>
       <div className="cs-stat-callout">
         <span className="cs-stat-number">76%</span>
@@ -88,14 +101,10 @@ function ProblemDomainSection() {
         <span className="cs-stat-source">2024 New Relic Observability Study</span>
       </div>
       <p>
-        By following best practices when it comes to observability, you can optimize your system and improve user
-        experience, while streamlining the discovery process for identifying bottlenecks or bugs.
-      </p>
-      <p>
-        Failure to implement proper observability practices can result in a degraded user experience and lead to
-        a chain of hard-to-diagnose issues, leaving your system brittle and broken. ITIC’s 2024 survey found that
-        over 90% of midsize and large enterprises put the cost of an hour of downtime above $300,000, and for
-        smaller businesses more than $10,000 per hour.
+        Failure to implement proper observability practices can result in a degraded user experience and lead to a chain
+         of hard-to-diagnose issues, leaving your system brittle and broken. ITIC's 2024 survey found that over 90% of
+          midsize and large enterprises put the cost of an hour of downtime above $300,000, and for smaller businesses
+           more than $10,000 per hour. 
       </p>
 
       <h3 id="what-is-telemetry">What is Telemetry?</h3>
@@ -103,30 +112,32 @@ function ProblemDomainSection() {
         In this context, telemetry data refers to the information that is continuously emitted by your systems
         and its supporting infrastructure as they run.
       </p>
-      <figure className="cs-figure">
-        <img src={telemetry} alt="The three pillars of telemetry: logs, metrics, and traces" className="cs-image cs-image--half" />
-      </figure>
       <p>
-        Telemetry data is typically emitted in the form of logs, metrics, and traces, which provide teams with
-        valuable insight into how their system is operating at any given time. Traces follow user requests across
-        different components as they propagate through the system; logs are written records of events that occurred;
-        and metrics are numerical measurements of behaviour/state collected over time, sort of like vital signs.
-      </p>
-      <p>
-        Metrics are generally considered to be the base unit of observability; they are disposable, have a
-        predictable storage footprint, and may be aggregated at query time to better serve the end user. They are
-        the most visualizable of the types of data thus far mentioned, which is why they are often the first signal
-        an organization configures their applications to emit.
+        Telemetry data is typically emitted in the form of logs, metrics, and traces, which provide teams with valuable 
+        insight into how their system is operating at any given time. 
+        <ul>
+          <li>Traces follow user requests across different components as they propagate through the system.</li>  
+          <li>Logs are written records of events that occurred.</li>
+          <li>Metrics are numerical measurements of behaviour/state collected over time, sort of like vital signs.</li> 
+        </ul>
       </p>
       <figure className="cs-figure">
         <img src={typicalMetricsDashboard} alt="A typical metrics dashboard" className="cs-image cs-image--three-quarter" />
         <figcaption className="cs-caption">A typical metrics dashboard. Latency, error rate, and request volume displayed as time-series graphs.</figcaption>
       </figure>
+      <p>
+        Metrics are generally considered to be the base unit of observability; they are disposable, have a predictable
+        storage footprint, and may be aggregated at query time to better serve the end user. Since metrics are a
+        measurement over time, they are a natural fit to display on graphs or charts where one of the axes is
+        time; as such, they are often the first signal an organization configures their applications to emit,
+        in order to visualize changes in application state.
+      </p>
+
 
       <h3 id="why-are-metrics-important">Why are metrics important?</h3>
       <p>
-        When queried effectively, metrics provide critical insight into identifying performance issues, and
-        understanding system behaviours; equipping developers to make decisions that will improve system performance.
+        When queried effectively, metrics provide critical insight into performance issues and system behaviors;
+        equipping developers to make decisions that will improve system performance. 
       </p>
       <div className="cs-stat-callout">
         <span className="cs-stat-number">95%</span>
@@ -137,47 +148,58 @@ function ProblemDomainSection() {
         Every engineering team’s observability needs are different, but certain metrics are universally important.
       </p>
       <ul>
-        <li><strong>Latency</strong>: the time it takes for data to travel from one point to another.</li>
-        <li><strong>Traffic</strong>: the volume of requests or transactions a system can/is processing.</li>
-        <li><strong>Errors</strong>: information about failed requests or processes.</li>
-        <li><strong>Saturation</strong>: monitoring resource utilization.</li>
+        <li><strong>Latency</strong>: The delay between an action and its response.</li>
+        <li><strong>Traffic</strong>: The volume of requests or transactions a system can/is processing.</li>
+        <li><strong>Errors</strong>: Information about failed requests or processes.</li>
+        <li><strong>Saturation</strong>: Monitoring resource utilization.</li>
       </ul>
       <h4>How are metrics produced?</h4>
       <p>
-        In order for an application to begin emitting metrics and other observability data, it first needs to be
-        instrumented. Instrumentation of an application is the process of adding code, agents, or another monitoring
-        implementation into the application, such that it emits telemetry data. The emerging standard for
-        instrumentation is OpenTelemetry (OTel). OTel instrumentation may be automatic (where their instrumentation
-        SDK hooks into supported libraries and code within the application, in order to emit telemetry signals with
-        minimal code changes); or it may be manual, where a developer can (among other things) define specific
-        attributes to be emitted in the telemetry signal they’re building, via OTel’s SDK or APIs.
+        In order for an application to begin emitting metrics and other observability data, it first needs to be 
+        instrumented. Instrumentation of an application is the process of adding code, agents, or other monitoring 
+        implementations into the application, such that it emits telemetry data. The modern standard for instrumentation 
+        is OpenTelemetry (OTel). OTel instrumentation may be automatic (where their instrumentation SDK hooks into 
+        supported libraries and code within the application, in order to emit telemetry signals with minimal code 
+        changes); or it may be manual, where a developer can (among other things) define specific attributes to be 
+        emitted in the telemetry signal they’re building, via OTel’s SDK or APIs.
       </p>
       <p>
-        Instrumenting your applications to produce these metrics is only part of the challenge. Once your system
-        begins emitting metrics, these samples need to be transported and stored in a manner that preserves their
-        time-based nature. This storage solution needs to remain stable and affordable as the system grows; factors
-        that contribute to cost include the infrastructure hosting the solution, as well as the time developers spend
-        maintaining it. At any point in time the volume of emitted samples may spike in such a way as to overwhelm
-        your storage solution; this may be caused by a surge in traffic to your application, or a change in its
-        instrumentation. If this were to occur during a critical time, your discovery process is likely to stop
-        working altogether, resulting in the loss of critical data when needed most.
+        Instrumenting your applications to produce these metrics is only part of the challenge. Once your system begins 
+        emitting metrics, these samples need to be transported and stored in a manner that preserves their time-based 
+        nature. This storage solution needs to remain stable and affordable as the system grows. Factors that contribute 
+        to cost include the infrastructure hosting the solution, as well as the time spent maintaining it. At any point 
+        in time the volume of emitted samples may spike in such a way as to overwhelm your storage solution; this may 
+        be caused by a surge in traffic to your application, or a change in its instrumentation. If this occurred 
+        during an outage or unexpected incident, your discovery process is likely to stop working altogether, resulting 
+        in the loss of critical data when it’s needed most. OTel metrics are exported using the OpenTelemetry 
+        Protocol (OTLP), and are referred to as such.
       </p>
 
       <h3 id="how-are-metrics-stored">How are Metrics Stored?</h3>
       <p>
-        Metrics are composed of the metric’s name, its labels (which are a set of key value pairs), and an
-        arbitrary numerical value which represents a measurement of a given type, at a specific time. Knowing how
-        much memory is being used at any given time tells you something, but without the context of knowing how
-        memory usage has changed over the past minute, hour, day or week, that single value is of little use. A
-        time-series is a sequence of a particular label set for a metric (and its value) tracked over time.
-        Therefore, every distinct combination of a metric name and its labels produces a separate time series to
-        be stored and tracked; these time-series are what you usually see displayed on a dashboard. To store and
-        query time-series data efficiently, you use a time-series database (TSDB), which tracks the changing values
-        for that particular time-series chronologically. TSDBs are built in such a way that they can efficiently
-        ingest, store and query large amounts of timestamped, numerical data points, making them the obvious choice
-        for the observation of metrics.
+        Metrics are composed of the metric’s name, its labels (which are a set of key value pairs), and a numerical
+        value which represents a measurement of a given type, at a specific time. Knowing how much memory is being
+        used at any given time tells you something, but without knowing how memory usage has changed over the past
+        minute, hour, day or week, that single value is of little use. A time-series is a sequence of a particular
+        label set for a metric (and its value) tracked over time.
       </p>
-      <div className="cs-placeholder">Image: The shape of typical time-series data</div>
+
+      <figure className="cs-figure">
+        <img src={timeSeriesEx} alt="A time-series example" className="cs-image" />
+        <figcaption className="cs-caption">Memory usage (MB) tracked over 24 hours for a single time-series, identified by its label set.</figcaption>
+      </figure>
+
+      <p>
+        Therefore, every distinct combination of a metric
+        name and its labels produces a separate time-series to be stored and tracked; these time-series are what you
+        usually see displayed on a dashboard. To store and query time-series data efficiently, you use a time-series
+        database (TSDB), which tracks the changing values for that particular time-series chronologically. TSDBs are
+        built in such a way that they can efficiently ingest, store and query large amounts of timestamped, numerical
+        data points, making them the obvious choice for the observation of metrics. Each new time series requires a
+        new index entries and new memory structures to maintain (in order to store metadata and in-memory state); the
+        storage engine has to manage each new series as an independent stream. As such, memory acts as one of the
+        primary constraints for TSDBs.
+      </p>
       <p>
         However, even if you’ve instrumented your apps thoughtfully and have chosen an optimised, deliberate
         storage solution, you can run into significant issues.
@@ -193,45 +215,47 @@ function DomainChallengesSection() {
 
       <h3 id="platform-implementation">Platform Implementation</h3>
       <p>
-        An observability platform, sometimes referred to as a backend pipeline, generally requires at minimum an
-        ingestion point and a TSDB; most TSDBs expose a UI to query data, but in order to actually create
-        visualizations over time, a separate visualization component is required.
+        An observability platform generally requires at minimum, an ingestion point and a TSDB; most TSDBs expose 
+        a UI to query data, but in order to actually create visualizations over time, a separate visualization component is required.
       </p>
       <p>
-        Metrics may flow from an instrumented app to an observability platform in two ways. They may be
-        pulled/scraped by a component in the pipeline, or pushed (by an agent running alongside the source
-        application) to a component in the pipeline. In the push-style model, a collector accepts emitted metrics
-        and forwards the samples to the TSDB for storage. The data is then exposed through a visualization layer
-        for querying and tracking, which is where a developer may choose to implement dashboards.
+        Metrics may flow from an instrumented app to an observability platform in two ways. They may be pulled/scraped by a 
+        component in the pipeline, or pushed (by an agent running alongside the source application) to a component in the pipeline. 
+        In the push-style model, metrics are pushed from the source application to an external collector, which then forwards the 
+        samples to the TSDB for storage. The data is then exposed through a visualization layer for querying and tracking, which 
+        is where a developer may choose to implement dashboards.
       </p>
       <p>
-        Each component in the pipeline introduces its own unique operational concerns. First, a decision must be
-        made at each stage regarding which dependency to incorporate. After those choices have been made, the next
-        hurdle is the configuration overhead. The chosen collector must be configured to receive and forward samples
-        reliably; and the TSDB must be sized appropriately, potentially configured to scale if the need should
-        arise, such that the query layer remains responsive when the data grows beyond your expectations.
+        Each component in the pipeline introduces its own unique operational concerns. First, a decision must be made at each 
+        stage regarding which dependency to incorporate. After those choices have been made, the next hurdle is the configuration 
+        overhead. The chosen collector must be configured to receive and forward samples reliably; and the TSDB must be sized 
+        appropriately, potentially configured to scale if the need should arise, such that the query layer remains responsive 
+        when the data grows beyond your expectations.
       </p>
       <figure className="cs-figure">
         <img src={basicBackend} alt="A basic metrics observability backend pipeline" className="cs-image" />
+        <figcaption className="cs-caption">A basic metrics observability pipeline. Instrumented applications push telemetry to a collector, which forwards it to a time-series database for storage and querying via a visualization layer.</figcaption>
       </figure>
       <p>
-        This is, of course, an over-simplified model — but the point stands: building a metrics pipeline means
-        orchestrating and synchronizing several complex dependencies, each one introducing a new point of failure
-        if misconfigured or poorly provisioned.
+        This is, of course, an over-simplified model but the point stands; building a metrics pipeline means orchestrating 
+        and synchronizing several complex dependencies, each one introducing a new point of failure if misconfigured or 
+        poorly provisioned. 
       </p>
       <p>
-        Even a well provisioned pipeline can quickly become unstable. For instance, if an app's metrics are
-        unknowingly instrumented with unbounded labels (labels with an indeterminate number of values that tend to
-        grow with the system over time, often directly correlated with the app's traction), this causes metric
-        cardinality to spike, which may be catastrophic for the TSDB.
+        Even a well provisioned pipeline can quickly become unstable. One of the most common ways that an observability platform 
+        can become unstable is through metric cardinality explosion.
       </p>
 
       <h3 id="what-is-cardinality">What is Cardinality?</h3>
       <p>
-        We can define cardinality as the number of unique combinations that are possible for a given metric and
-        its label set; therefore, cardinality is a measurement of the number of time-series produced by a metric.
+        We can define cardinality as the number of unique combinations (not permutations; ordering doesn’t matter) that are 
+        possible for a given metric and its label set; therefore, cardinality is a measurement of the number of time-series 
+        produced by a metric.
       </p>
-      <div className="cs-placeholder">Image: cardinality diagram</div>
+      <figure className="cs-figure">
+        <img src={exampleTimeseriesDist} alt="Example time-series cardinality distribution" className="cs-image" />
+        <figcaption className="cs-caption">Cardinality as a product of label value combinations for the metric <code>http_requests_total</code>.</figcaption>
+      </figure>
       <p>
         The above metric, <code>http_requests_total</code>, has 2 labels: <code>instance</code> and{' '}
         <code>status</code>. Instance has 2 potential values, while status has 3. These can be combined in any
@@ -243,17 +267,21 @@ function DomainChallengesSection() {
         example, a user ID.
       </p>
       <p>
-        To give an example, let's say you run a service with 10,000 users. Your service tracks the status code of
-        each request (5 possible values), 10 URL paths, and runs on servers across 2 regions. A developer
-        instruments the application to produce a metric called <code>http_requests_total</code>, with all of
-        these details included as labels:
+        To give an example, let’s say you run a service that has 10,000 users. Your service may take into 
+        consideration the status code of the request the user has made (5 possible options). You’ve also 
+        got 10 url paths, and the service runs on servers in 2 different regions. A developer instruments 
+        your application/s to produce a metric called <code>http_requests_total</code>, with all of these details 
+        included as different labels.
       </p>
-      <pre><code>{`http_requests_total{
+      <figure className="cs-figure">
+        <pre><code>{`http_requests_total{
   user_id="1",
   url_path="/api/example",
   status_code="200",
   region="us-east-1"
 } 1`}</code></pre>
+        <figcaption className="cs-caption">A single sample of <code>http_requests_total</code> with four labels, each contributing a dimension to the metric's cardinality.</figcaption>
+      </figure>
       <p>
         Assuming all combinations are possible, the cardinality of this metric would be
         10,000 × 10 × 5 × 2 = 1,000,000. For 10,000 users and just three other relatively benign labels,
@@ -266,18 +294,22 @@ function DomainChallengesSection() {
         instead, each new combination of labels creates a new time-series.
       </p>
       <p>
-        This rapid growth in the number of time-series is known as a <strong>cardinality explosion</strong>. As a
-        result of this rapid influx of data through the pipeline, your TSDB must maintain more indexing
-        structures, in-memory state, and metadata associated with each series. If your TSDB isn't provisioned to
-        handle this increased memory burden, your query layer becomes vastly less responsive — making it difficult
-        to track metrics and, in extreme cases, borderline impossible to use. In their 2025 observability study,
-        Grafana identified cardinality spikes as a common source of increased resource usage, memory pressure, and
-        system instability.
+        This surge in the number of distinct time-series is known as a <strong>cardinality explosion</strong>. As a result of this rapid 
+        influx of new series through the pipeline, the TSDB will consume much more memory, due to index-structure 
+        expansion for each new time-series, as well as the storage of in-memory metadata. A cardinality explosion’s 
+        memory burden is distinct from spikes in existing series, since existing series don’t expand the index footprint 
+        of the TSDB, nor do they introduce new metadata.
       </p>
       <p>
-        In particular, significant explosion incidents result in an out-of-memory error, causing your
-        observability stack to come to a grinding halt. Without cardinality control measures, your infrastructure
-        will need to scale its storage and compute structures to accommodate the surge, resulting in greater costs.
+        If your TSDB isn’t provisioned to deal with this increased memory burden, then your query layer becomes vastly 
+        less responsive, making it difficult to track metrics and in extreme cases, borderline impossible to use. In 
+        their 2025 observability study, Grafana identified cardinality spikes as a common source of increased resource 
+        usage, memory pressures, and system instability.
+      </p>
+      <p>
+        In particular, significant explosion incidents result in an out-of-memory error, which will cause your observability 
+        stack to come to a grinding halt. In order to account for an incident of this magnitude without cardinality control 
+        measures, your infrastructure will need to scale its storage and compute structures, resulting in greater costs.
       </p>
       <figure className="cs-figure">
         <img src={cardinalityExplosionGraph} alt="Cardinality explosion graph" className="cs-image" />
@@ -286,15 +318,14 @@ function DomainChallengesSection() {
 
       <h3 id="cardinality-control">Cardinality Control</h3>
       <p>
-        Preventing cardinality from becoming unwieldy is an important and often altogether neglected part of the
-        observability pipeline. A certain label may not be useful today, but could be of paramount importance when
-        high-resolution data is needed to debug an issue. For example, a pod ID label can demonstrate that all
-        metrics which contain a crash error are associated with a given set of pods in a Kubernetes cluster;
-        without that added dimension, bug resolution becomes increasingly difficult — if not outright impossible —
-        without peering directly into the system. Being able to control these dimensions ad hoc allows a developer
-        to maintain pipeline stability without sacrificing granularity during critical periods. It also avoids the
-        pitfalls of adjusting app instrumentation, which can be a slow and cumbersome process when comprehensive
-        CI/CD practices are in place.
+        Preventing cardinality from becoming unwieldy is an important and often neglected part of the observability pipeline. 
+        A certain label may not be useful today, but could be of paramount importance when high-resolution data is needed 
+        to debug an issue. For example, a pod ID label can demonstrate that all metrics which contain a crash error label 
+        are associated with a given set of pods in a Kubernetes cluster. Without that added dimension to the metric, bug 
+        resolution becomes increasingly difficult if not outright impossible without peering into the system. Being able 
+        to control these dimensions ad hoc allows a developer to maintain pipeline stability without sacrificing granularity 
+        during critical periods. It also avoids all the pitfalls of having to adjust app instrumentation, which can be a 
+        slow and cumbersome process.
       </p>
 
       <h3 id="observability-landscape">The Metrics Observability Landscape</h3>
@@ -304,44 +335,50 @@ function DomainChallengesSection() {
       </p>
       <h4>End-to-End Managed Platforms</h4>
       <p>
-        End-to-end managed platforms such as Datadog, New Relic, and Dynatrace own and manage the entire
-        observability pipeline. These platforms are composed of proprietary software; their pipelines (and
-        required instrumentation of your apps) are simple, and come with a rich set of features as well as
-        industry-leading support. You do, however, pay large costs which scale with usage and can reach
-        eye-watering amounts when you produce enough telemetry data. Platforms like these often lead to vendor
-        lock-in, making egress difficult, if not impossible.
+        End-to-End (E2E) managed platforms such as Datadog, New Relic, and Dynatrace, own and manage the entire 
+        observability pipeline. These platforms are composed of proprietary software; their pipelines (and required 
+        instrumentation of your apps) are simple to set up, and come with a rich set of features, as well as industry 
+        leading support. You do, however, pay large costs which scale with usage, and can reach eyewatering amounts 
+        when you produce enough telemetry data.  Platforms like these and many others often lead to vendor lock-in, 
+        making egress difficult.
       </p>
       <h4>Managed OSS Platforms</h4>
       <p>
-        Managed OSS platforms such as Grafana Cloud and Chronosphere provide experiences similar to E2E managed
-        platforms, but are typically comprised of open-source components rather than proprietary ones (though
-        mixed models exist, e.g. Grafana Cloud's adaptive telemetry service). Since they're built on open-source
-        components, you're not locked into a proprietary data format, nor peering into a completely abstracted
-        black box — and so you could, in theory, create your own platform using similar tools and migrate while
-        retaining historical data. However, your data still lives on the vendor's servers, and you pay ongoing
-        usage fees that scale with the volume of your telemetry data.
+        Managed OSS platforms such as Grafana Cloud and Chronosphere provide experiences similar to that of the E2E 
+        Managed Platforms, but are typically comprised of open source components rather than proprietary ones 
+        (although mixed-models exist e.g. Grafana Cloud’s adaptive telemetry service). Since they’re built on open 
+        source components, you’re not locked into a proprietary data format, nor are you peering into a completely 
+        abstracted blackbox; and so you could, in theory, create your own platform using similar tools and migrate 
+        while maintaining historical data. However, your data still lives on the vendor's servers for as long as 
+        ou use them, and you pay ongoing usage fees that scale with the volume of your telemetry data.
       </p>
       <h4>Self-Hosted OSS Tools</h4>
       <p>
-        Self-hosted OSS components such as Prometheus, Mimir, VictoriaMetrics, Grafana, and OpenTelemetry
-        Collector are all production-grade and may be carefully stitched together to yield a suitable platform.
-        The provisioning process is no small challenge: each component must be configured, performance settings
-        tuned, everything wired together, and the system maintained indefinitely — and that's just bare metal. A
-        cloud deployment adds the overhead of translating all of that into cloud infrastructure. The setup process
-        can take weeks, and the burdens don't end at deployment; your team must consider scaling, upgrades, and
-        platform incident responses. You do end up with complete data ownership, personalised flexibility, and
-        very little cost beyond the infrastructure hosting the platform. For teams that require strict data
-        ownership — whether for compliance or otherwise — a self-hosted platform is often the only viable solution.
+        Self-hosted OSS components such as Prometheus, Mimir, VictoriaMetrics, Grafana, OpenTelemetry Collector, 
+        etc, are all production grade, and may be carefully stitched together to yield a suitable platform. Of 
+        course, it is no small challenge to provision the platform; you’ll have to configure each component, 
+        tune performance settings, wire them all together, and maintain the system indefinitely; and that’s 
+        just bare metal. If you want it deployed to the cloud, you’ve also got to translate all of that into 
+        cloud infrastructure. The setup process is cumbersome; it may end up taking weeks, and your burdens don’t 
+        end at deployment; your team will have to consider scaling, upgrades, and platform incident responses. 
+        You do end up with complete data ownership, personalised flexibility, and very little cost beyond the 
+        infrastructure you host the platform on. For teams that require strict data ownership, whether that be 
+        for data compliance reasons or otherwise, a self-hosted platform is often the only viable solution. 
       </p>
       <p>
-        If a self-hosted implementation is considered ideal, there is another hurdle to conquer: implementing
-        cardinality control. There are very few, if any, open-source implementations of cardinality control
-        measures comparable to Grafana Adaptive Telemetry — wherein their adaptive metrics service can detect
-        unused labels among existing time-series and recommend them as targets to drop or aggregate. A team would
-        have to reverse-engineer these features from scratch, requiring a solid understanding of time-series data,
-        the ability to leverage component APIs, and a pipeline that supports adding or removing rules ad hoc
-        without disrupting sample ingestion.
+        In cases where a self-hosted implementation is preferred, then there is another hurdle to conquer: 
+        implementing cardinality control. There are very few, if any, open source implementations of cardinality 
+        control measures à la Grafana Adaptive Telemetry; wherein their adaptive metrics service is able to detect 
+        unused labels among existing time-series, and recommend them as targets to drop and/or aggregate. A user 
+        would have to reverse engineer these features from scratch, which means learning a fair amount about time-series 
+        data, and understanding how to leverage component APIs. Then it needs to be decided if the components can support 
+        such functionality by leveraging said APIs. Finally, the pipeline has to support the ability to add or remove 
+        cardinality control configs ad hoc, without disrupting the ingestion of samples.
       </p>
+      <figure className="cs-figure">
+        <img src={tricklLandscapeComparison} alt="Trickl landscape comparison" className="cs-image" />
+        <figcaption className="cs-caption">A comparison of the metrics observability landscape, positioning Trickl relative to managed and self-hosted alternatives across cost, control, and operational complexity.</figcaption>
+      </figure>
     </>
   )
 }
@@ -349,22 +386,175 @@ function DomainChallengesSection() {
 function BuildingTricklSection() {
   return (
     <>
-      <h2>Building Trickl</h2>
-
-      <h3 id="our-approach">Our Approach</h3>
+      <h2>Building the Platform</h2>
       <p>
-        Trickl aims to sit somewhere between Managed OSS Platform and Self-Hosted OSS Tools by
-        assisting small development teams in setting up their own self-hosted OSS platform.
-        Normally this process could take weeks, but with Trickl, the entire process is complete
-        in 30 minutes. The user provides their AWS information, and Trickl provisions all the
-        services needed on a VPS right in their own AWS environment.
+        Trickl's architecture is composed of two closely related systems: a metrics observability
+        pipeline and a Smart-Metrics Service (SMS).
+      </p>
+      <figure className="cs-figure">
+        <img src={smartmetricsPipeline} alt="Smart Metrics pipeline diagram" className="cs-image cs-image--three-quarter" />
+        <figcaption className="cs-caption">An overview of Trickl's architecture.</figcaption>
+      </figure>
+
+      <h3 id="metrics-pipeline">Metrics Observability Pipeline</h3>
+      <p>
+        Let's walk through the lifecycle of a metric as it flows through Trickl's architecture.
       </p>
       <p>
-        On top of assisting the user with the setup process, Trickl also adds a Cardinality
-        Control system, "Smart Metrics", to mitigate Cardinality Explosion. By reviewing the
-        queries made in Grafana by the user and the volume of time series being created by a
-        single metric, our Smart Metrics system is able to make recommendations to the user
-        where they could reduce Cardinality in their Time Series Database.
+        An application needs to be instrumented such that it emits OpenTelemetry Protocol (OTLP)
+        format metrics, providing Trickl with a consistent structure to receive and process. OTLP
+        is the emerging standard, and so Trickl prioritises OTLP metrics. An individual
+        time-series datum is referred to as a "sample".
+      </p>
+      <p>
+        The first component to receive those metrics is Vector, which acts as Trickl's collector
+        gateway. Vector is an open-source data pipeline tool that is able to receive, process, and
+        route telemetry data to downstream systems. This capability is used to split the metric
+        stream into two paths: a live ingestion path where metrics can be filtered and modified
+        (the primary path), and long-term archival storage, where the raw metrics are written to
+        an S3 bucket.
+      </p>
+      <p>
+        This long-term archive acts primarily as a safeguard. Preserving the original samples
+        separately from those in the primary path ensures a consistent source of truth exists at
+        all times. Samples in the primary path can be mutated — since labels can be removed — or
+        omitted entirely in the case of aggregation, where metrics are grouped into a single value.
+        TSDBs that are not built around object storage tend to have a short TTL policy to prevent
+        unbounded storage growth, meaning samples can be evicted over time. If a user drops an
+        unbounded label from a metric and later finds that label would provide valuable insight into
+        a newly discovered issue, they can import untainted samples from the archive into the TSDB
+        rather than waiting for new samples to accumulate. The archive also allows users to view
+        long-term metrics — such as seasonal trends in user activity — that would otherwise be
+        unavailable due to the TSDB's TTL policy.
+      </p>
+
+      <h4>TSDB</h4>
+      <p>
+        In the primary path, Vector forwards samples to VictoriaMetrics, which serves as Trickl's
+        TSDB. VictoriaMetrics can be deployed in clustered mode, where its functionality is spread
+        across several components. The clustered configuration was chosen over single-node mode to
+        support workloads that may grow at different rates across the ingestion, storage, and query
+        layers — allowing each component to be scaled independently as the volume of metrics or
+        query demand grows.
+      </p>
+      <p>
+        The first component in the chain is <strong>vmagent</strong>, a lightweight metrics
+        collection agent. Cardinality-control rules are applied here via config files — where
+        label-drop or aggregation rules can be declared — reducing unnecessary label dimensions
+        before samples reach VictoriaMetrics' storage component (<strong>vmstorage</strong>).
+        Crucially, vmagent can reload config changes without going offline, so the incoming stream
+        of metrics is never interrupted when cardinality-control rules are added or removed. Vmagent
+        is therefore the boundary between the raw incoming stream (preserved in the archive) and the
+        optimized stream persisted in the TSDB — a role of paramount importance in the Smart-Metrics
+        Service's feedback loop.
+      </p>
+      <div className="cs-placeholder">Image: vmagent architecture diagram</div>
+      <p>
+        Vmagent forwards samples to <strong>vminsert</strong>, which acts as the write entry point
+        of the VictoriaMetrics deployment. Vminsert distributes samples across the vmstorage nodes
+        using deterministic hashing of the sample's metric name and label set.
+      </p>
+      <p>
+        <strong>Vmstorage</strong> persists the time-series samples to disk and uses memory for
+        indexing, ingestion buffering, and query execution assistance.
+      </p>
+      <div className="cs-placeholder">Image: VictoriaMetrics cluster diagram</div>
+      <p>
+        Once samples are persisted, they need to be made available for querying.{' '}
+        <strong>Vmselect</strong> is the final component of the VictoriaMetrics deployment. Like
+        vminsert, it is stateless, meaning multiple vmselect nodes can run completely unaware of
+        each other. Vmselect accepts queries from a frontend, retrieves the relevant time-series
+        data from vmstorage, and returns the result according to the parameters declared in the
+        query. For repeated or overlapping queries, vmselect can maintain a cache to help improve
+        response times.
+      </p>
+      <p>
+        Trickl uses <strong>Grafana</strong> as its visualization layer, from which users may query
+        the TSDB. Users can interact with a familiar frontend, build their own dashboards, and
+        construct PromQL queries against the data persisted within VictoriaMetrics. PromQL is the
+        Prometheus query language used to query time-series data.
+      </p>
+      <div className="cs-placeholder">Image: Grafana dashboard screenshot</div>
+      <p>
+        These queries are sent to vmselect, the appropriate data is retrieved from vmstorage, and
+        the result is presented back to the user in the Grafana UI — usually in the form of graphs
+        or tables.
+      </p>
+
+      <h3 id="smart-metrics-service">Smart Metrics Service</h3>
+      <p>
+        The Smart-Metrics Service observes how metrics are stored and queried, and offers
+        recommendations to reduce potentially unnecessary cardinality in the live ingestion path.
+        Exposed through Trickl's custom Grafana plugin, it allows users to inspect and apply
+        cardinality recommendations as they see fit.
+      </p>
+      <div className="cs-placeholder">Image: SMS Grafana plugin screenshot</div>
+      <p>
+        This placement within Grafana is intentional. A developer can move directly from reviewing
+        dashboards or constructing queries to inspecting aggregation or label-drop suggestions —
+        without needing to switch to another tool. The plugin also includes an AI agent that can
+        explain recommendations in plain language and converse about the current state of internal
+        services.
+      </p>
+      <p>
+        In order to generate recommendations, the Smart-Metrics Service compares two distinct
+        signals: what is being queried, and what is in storage.
+      </p>
+      <div className="cs-placeholder">Image: SMS signal comparison diagram</div>
+      <p>
+        Smart-Metrics focuses on identifying labels that contribute disproportionately to
+        cardinality while currently providing no practical query value. Generated recommendations
+        are stored in a PostgreSQL database.
+      </p>
+      <p>
+        Suggestions are surfaced to the user on a per-label basis. Once a decision is made, the
+        system translates it into an appropriate vmagent configuration change and hot-reloads
+        vmagent — applying the rule without halting ingestion. The system is also reversible; if a
+        previously dropped label becomes relevant again, the user can reinstate it and resume
+        receiving that dimension of data.
+      </p>
+
+      <h3 id="cloud-infrastructure">Cloud Infrastructure</h3>
+      <p>
+        Trickl's cloud infrastructure is provisioned using AWS CDK. Since local development
+        involved containerizing each major component, ECS was chosen as the deployment strategy
+        with EC2-backed compute — suited to an always-on observability platform.
+      </p>
+      <p>
+        The deployment is built around a three-node architecture. The first node can best be
+        described as the "interface" node: it houses the components responsible for metric sample
+        intake and exportation, as well as Grafana and the Smart-Metrics Service. The containers
+        on this node don't generally require scaling, and the most demanding of them —
+        Smart-Metrics — is only run in response to a user request.
+      </p>
+      <div className="cs-placeholder">Image: three-node architecture diagram</div>
+      <p>
+        The second and third nodes host vmselect and vmstorage respectively. This separation is
+        intentional: both are scalable bottlenecks in the pipeline. Vmselect can become encumbered
+        by demanding query load from dense dashboards (which indirectly stresses vmstorage too),
+        while vmstorage may need to expand — and potentially shard — as time-series data grows.
+      </p>
+      <p>
+        Trickl's architecture is deliberately designed to prevent query and storage concerns from
+        starving other components, while leaving room for users to implement their own scaling
+        strategy. Trickl doesn't currently provision scaling policies out of the box, but all nodes
+        are defined as autoscaling groups so users can configure this themselves. The default
+        configuration is estimated to handle between 50–100 billion samples per month, and
+        Smart-Metrics' cardinality-control measures should significantly reduce the burden on
+        ingestion components and keep overall time-series counts low.
+      </p>
+      <p>
+        Trickl also provisions an RDS PostgreSQL database for the persistent data the SMS relies
+        on, and an S3 bucket for the long-term archive that Vector exports raw metrics to.
+      </p>
+      <div className="cs-placeholder">Image: full cloud architecture diagram</div>
+
+      <h3 id="observing-observability">Observing Observability</h3>
+      <p>
+        Finally, each provisioned container writes logs to CloudWatch, giving Trickl some
+        observability over its own deployed infrastructure. This facilitates debugging once the
+        system is live — enabling inspection of container startup failures, task crashes,
+        configuration issues, and more without needing to connect to the service directly.
       </p>
     </>
   )
