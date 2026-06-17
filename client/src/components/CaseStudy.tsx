@@ -1,12 +1,19 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import typicalMetricsDashboard from '../assets/typical_metrics_dashboard.png'
-import telemetry from '../assets/telemetry.png'
 import cardinalityExplosionGraph from '../assets/cardinality_explosion_graph.png'
 import basicBackend from '../assets/basic_backend.gif'
 import timeSeriesEx from '../assets/time-series-ex.png'
 import exampleTimeseriesDist from '../assets/example-timeseries-dist.png'
 import tricklLandscapeComparison from '../assets/trickl-landscape comparison-dark.png'
-import smartmetricsPipeline from '../assets/smartmetrics-pipeline.gif'
+import smartmetricsPipeline from '../assets/full-arch.gif'
+import vmagentArch from '../assets/vmagent-arch.png'
+import statefulStateless from '../assets/stateful-stateless.png'
+import promQLQuery from '../assets/promQLQuery.png'
+import grafanaVm from '../assets/grafana-vm.gif'
+import sms from '../assets/sms.png'
+import nodeArch from '../assets/node-arch.png'
+import cloudwatch from '../assets/cloudwatch.png'
+import tsdbcomp from '../assets/tsdbcomp.png'
 
 const sections = [
   {
@@ -36,7 +43,7 @@ const sections = [
   },
   {
     id: 'building-trickl',
-    label: 'Building Trickl',
+    label: 'Building the Platform',
     subsections: [
       { id: 'our-approach', label: 'Our Approach' },
       { id: 'metrics-pipeline', label: 'Metrics Observability Pipeline' },
@@ -48,12 +55,21 @@ const sections = [
   {
     id: 'design-decisions',
     label: 'Design Decisions & Tradeoffs',
-    subsections: [],
+    subsections: [
+      { id: 'tsdb', label: 'TSDB' },
+      { id: 'long-term-retention', label: 'Long Term Retention' },
+      { id: 'automation', label: 'Automation' },
+      { id: 'llms-in-cardinality', label: 'LLMs in Cardinality Management' },
+    ],
   },
   {
     id: 'future-work',
     label: 'Future Work',
-    subsections: [],
+    subsections: [
+      { id: 'fw-infrastructure', label: 'Infrastructure' },
+      { id: 'fw-cicd', label: 'CI / CD' },
+      { id: 'fw-smart-metrics', label: 'Smart-Metrics Service' },
+    ],
   },
 ]
 
@@ -448,7 +464,10 @@ function BuildingTricklSection() {
         optimized stream persisted in the TSDB — a role of paramount importance in the Smart-Metrics
         Service's feedback loop.
       </p>
-      <div className="cs-placeholder">Image: vmagent architecture diagram</div>
+      <figure className="cs-figure">
+        <img src={vmagentArch} alt="vmagent architecture diagram" className="cs-image" />
+        <figcaption className="cs-caption">vmagent sits between the raw incoming stream and VictoriaMetrics, applying cardinality-control rules via hot-reloadable config before samples are indexed and stored.</figcaption>
+      </figure>
       <p>
         Vmagent forwards samples to <strong>vminsert</strong>, which acts as the write entry point
         of the VictoriaMetrics deployment. Vminsert distributes samples across the vmstorage nodes
@@ -458,7 +477,10 @@ function BuildingTricklSection() {
         <strong>Vmstorage</strong> persists the time-series samples to disk and uses memory for
         indexing, ingestion buffering, and query execution assistance.
       </p>
-      <div className="cs-placeholder">Image: VictoriaMetrics cluster diagram</div>
+      <figure className="cs-figure">
+        <img src={statefulStateless} alt="Stateful and stateless VictoriaMetrics components" className="cs-image" />
+        <figcaption className="cs-caption">The stateless vminsert and vmselect components can scale horizontally without coordination, while vmstorage is the stateful bottleneck responsible for persisting samples to disk.</figcaption>
+      </figure>
       <p>
         Once samples are persisted, they need to be made available for querying.{' '}
         <strong>Vmselect</strong> is the final component of the VictoriaMetrics deployment. Like
@@ -474,13 +496,19 @@ function BuildingTricklSection() {
         construct PromQL queries against the data persisted within VictoriaMetrics. PromQL is the
         Prometheus query language used to query time-series data.
       </p>
-      <div className="cs-placeholder">Image: Grafana dashboard screenshot</div>
+      <figure className="cs-figure">
+        <img src={promQLQuery} alt="Grafana dashboard UI" className="cs-image" />
+        <figcaption className="cs-caption">Trickl's Grafana visualization layer, where users build dashboards and construct PromQL queries against data persisted in VictoriaMetrics.</figcaption>
+      </figure>
       <p>
         These queries are sent to vmselect, the appropriate data is retrieved from vmstorage, and
         the result is presented back to the user in the Grafana UI — usually in the form of graphs
         or tables.
       </p>
-
+      <figure className="cs-figure">
+        <img src={grafanaVm} alt="Grafana and VictoriaMetrics integration" className="cs-image" />
+        <figcaption className="cs-caption">Trickl's custom Grafana plugin, through which the Smart-Metrics Service surfaces cardinality recommendations alongside the user's existing dashboards and queries.</figcaption>
+      </figure>
       <h3 id="smart-metrics-service">Smart Metrics Service</h3>
       <p>
         The Smart-Metrics Service observes how metrics are stored and queried, and offers
@@ -488,7 +516,6 @@ function BuildingTricklSection() {
         Exposed through Trickl's custom Grafana plugin, it allows users to inspect and apply
         cardinality recommendations as they see fit.
       </p>
-      <div className="cs-placeholder">Image: SMS Grafana plugin screenshot</div>
       <p>
         This placement within Grafana is intentional. A developer can move directly from reviewing
         dashboards or constructing queries to inspecting aggregation or label-drop suggestions —
@@ -500,7 +527,10 @@ function BuildingTricklSection() {
         In order to generate recommendations, the Smart-Metrics Service compares two distinct
         signals: what is being queried, and what is in storage.
       </p>
-      <div className="cs-placeholder">Image: SMS signal comparison diagram</div>
+      <figure className="cs-figure">
+        <img src={sms} alt="Smart Metrics Service signal comparison" className="cs-image cs-image--three-quarter" />
+        <figcaption className="cs-caption">The Smart-Metrics Service cross-references active Grafana queries against the label dimensions present in storage to identify cardinality that provides no current query value.</figcaption>
+      </figure>
       <p>
         Smart-Metrics focuses on identifying labels that contribute disproportionately to
         cardinality while currently providing no practical query value. Generated recommendations
@@ -527,7 +557,10 @@ function BuildingTricklSection() {
         on this node don't generally require scaling, and the most demanding of them —
         Smart-Metrics — is only run in response to a user request.
       </p>
-      <div className="cs-placeholder">Image: three-node architecture diagram</div>
+      <figure className="cs-figure">
+        <img src={nodeArch} alt="Three-node architecture diagram" className="cs-image" />
+        <figcaption className="cs-caption">Trickl's three-node deployment: an interface node housing Vector, Grafana, and the SMS; a vmselect node for query serving; and a vmstorage node for time-series persistence.</figcaption>
+      </figure>
       <p>
         The second and third nodes host vmselect and vmstorage respectively. This separation is
         intentional: both are scalable bottlenecks in the pipeline. Vmselect can become encumbered
@@ -547,7 +580,6 @@ function BuildingTricklSection() {
         Trickl also provisions an RDS PostgreSQL database for the persistent data the SMS relies
         on, and an S3 bucket for the long-term archive that Vector exports raw metrics to.
       </p>
-      <div className="cs-placeholder">Image: full cloud architecture diagram</div>
 
       <h3 id="observing-observability">Observing Observability</h3>
       <p>
@@ -556,6 +588,10 @@ function BuildingTricklSection() {
         system is live — enabling inspection of container startup failures, task crashes,
         configuration issues, and more without needing to connect to the service directly.
       </p>
+      <figure className="cs-figure">
+        <img src={cloudwatch} alt="CloudWatch logs" className="cs-image" />
+        <figcaption className="cs-caption">Container logs aggregated in CloudWatch, providing visibility into Trickl's own deployed infrastructure for debugging startup failures, task crashes, and configuration issues.</figcaption>
+      </figure>
     </>
   )
 }
@@ -564,7 +600,128 @@ function DesignDecisionsSection() {
   return (
     <>
       <h2>Design Decisions &amp; Tradeoffs</h2>
-      <p>Coming soon.</p>
+
+      <h3 id="tsdb">TSDB</h3>
+      <figure className="cs-figure">
+        <img src={tsdbcomp} alt="TSDB comparison" className="cs-image" />
+      </figure>
+      <p>
+        VictoriaMetrics is Trickl's choice of TSDB for the following reasons:
+      </p>
+      <ul>
+        <li>It is incredibly performant; it uses less CPU and RAM than competing TSDBs, and has aggressive compression techniques to better utilise disk storage, making it significantly more affordable.</li>
+        <li>It may be deployed in a simple clustered configuration that is relatively easy to deploy, scale, and maintain.</li>
+        <li>The clustered configuration sets up a separation of concerns that is logically appropriate for the scale of this project; the selection and storage components were anticipated to be the two major bottlenecks.</li>
+        <li>VictoriaMetrics can ingest OTLP format metrics, which is Trickl's targeted format.</li>
+      </ul>
+      <p>
+        VictoriaMetrics comes with these tradeoffs:
+      </p>
+      <ul>
+        <li>It cannot write to, or read from, long-term storage.</li>
+        <li>Vmselect's built-in visualization and monitoring capabilities left something to be desired.</li>
+        <li>Limited multi-tenancy features.</li>
+      </ul>
+      <p>
+        Grafana Mimir and Prometheus (with a Thanos sidecar) are alternatives. Both are able to
+        write to and read from object storage. Mimir in particular was a candidate for Trickl's
+        TSDB. It implements a micro-services architecture with strong multi-tenancy features, but
+        it is significantly less performant and its micro-services architecture is more complicated
+        to deploy, scale, and maintain. Mimir would better benefit a complex enterprise environment
+        that requires advanced multi-tenancy features.
+      </p>
+      <p>
+        Trickl implements VictoriaMetrics in the clustered configuration, with a sample retention
+        policy of 1 month.
+      </p>
+
+      <h3 id="long-term-retention">Long Term Retention</h3>
+      <p>
+        While VictoriaMetrics is unable to read from or write to long-term storage, Trickl's
+        platform still implements long-term retention of raw samples. This ensures that if a user
+        realises that high-cardinality data they previously dropped could help resolve a newly
+        discovered issue, that data still exists and can be used. It also serves as a data
+        compliance feature, providing users with an auditable trail of raw telemetry data entering
+        the system.
+      </p>
+      <p>
+        In order to write to long-term storage, Trickl uses Vector (Datadog), which offers the
+        following benefits:
+      </p>
+      <ul>
+        <li>A lightweight stream-based engine that integrates easily into an existing pipeline.</li>
+        <li>The ability to forward samples to multiple endpoints, including S3 buckets.</li>
+        <li>Custom transformations can be applied to samples before exporting to an endpoint.</li>
+        <li>Native OTLP format support.</li>
+      </ul>
+      <p>
+        Vector forwards a copy of each inbound sample to both VictoriaMetrics and an S3 bucket;
+        before writing to S3, Vector transforms the sample into a format compatible with
+        VictoriaMetrics' API. Kafka was briefly considered — its strong buffering capabilities
+        might have been used to backfill samples quickly should a user undo a rule, creating a
+        "just in time" metrics feature. However, it would have required additional dependencies.
+        For operational simplicity, Vector is the better choice.
+      </p>
+      <p>
+        Vector acts as the entry point into Trickl's pipeline. Vmagent was considered as an
+        alternative entry point, with Vector positioned after it. The benefit of putting vmagent
+        first is a unified entry point for multiple sample formats — for example, it can ingest
+        Prometheus-style metrics without additional configuration. The downside is that aggregation
+        and label-drop rules applied by vmagent can leak into the S3 archive, either placing
+        mutated data into long-term storage or depriving it of raw samples entirely, depending on
+        configuration. Data integrity was deemed more valuable than multi-format support (which
+        Vector may still be configured to handle in the future), so vmagent is positioned after
+        Vector.
+      </p>
+      <div className="cs-placeholder">Image: Vector pipeline diagram</div>
+
+      <h3 id="automation">Automation</h3>
+      <p>
+        Trickl's cardinality control measures are not automatic. Label-drop and aggregation rules
+        are only applied at vmagent in response to a user's explicit decision to accept or reject
+        a recommendation from the SMS.
+      </p>
+      <p>
+        Automating the workflow was well within Trickl's capabilities, but because Trickl is
+        decoupled from the source application, the system has no insight into the context of the
+        labels. Trickl cannot determine why a label may or may not be useful — but a developer
+        can. Consider a user whose instrumented app emits an{' '}
+        <code>http.requests.total</code> metric with an unbounded <code>trace_id</code> label.
+        To the Smart-Metrics component, if that label is recently unqueried and absent from any
+        dashboard, it would be a prime candidate to filter. The problem is that a user may intend
+        to use <code>trace_id</code> to correlate metrics to traces stored on a separate platform
+        — something Trickl simply cannot know.
+      </p>
+      <p>
+        Trickl anticipates that the end user knows what labels they need now and going forward.
+        The platform is designed to facilitate cardinality management <em>for</em> the user, not
+        to execute those measures <em>instead of</em> the user — doing so risks losing
+        high-resolution data points that a developer may consider valuable.
+      </p>
+
+      <h3 id="llms-in-cardinality">LLMs in Cardinality Management</h3>
+      <p>
+        Cardinality management is inherently a deterministic problem: a label is unqueried or it
+        isn't; it appears in a dashboard or it doesn't; it has <em>x</em> unique values and is
+        responsible for <em>x</em>% of the time-series a metric produces. At a glance, an LLM
+        could handle this with structured outputs, but it introduces unnecessary uncertainty. Even
+        with all tools provided, there is no guarantee an agent will use all of them. More
+        importantly, there is no real added benefit — the operations are straightforward, and
+        since the system is decoupled from the source application, it is dependent on user agency
+        regardless. Introducing an LLM into the generation and application of cardinality
+        management suggestions actually reduces quality, because the system can no longer guarantee
+        that specific thresholds are consistently met when making a recommendation. For these
+        reasons, Trickl's Smart-Metrics service takes a standard algorithmic approach to
+        determining whether a label is driving high cardinality and may be safely dropped.
+      </p>
+      <p>
+        That said, LLMs present a genuinely intuitive use case in this domain: natural language
+        explanations for the current state of the time-series database and the recommendations
+        generated. For the non-technical user, the AI agent integrated into Trickl's custom
+        Grafana plugin acts as an accessible interface for understanding why suggestions have been
+        made and how they relate to the current state of VictoriaMetrics.
+      </p>
+      <div className="cs-placeholder">Image: AI agent plugin screenshot</div>
     </>
   )
 }
@@ -573,7 +730,59 @@ function FutureWorkSection() {
   return (
     <>
       <h2>Future Work</h2>
-      <p>Coming soon.</p>
+
+      <h3 id="fw-infrastructure">Infrastructure</h3>
+      <ul>
+        <li>
+          <strong>Scaling policies:</strong> The system's components are deployed across separate
+          auto-scaling groups, but no scaling policies are shipped out of the box. A logical next
+          step would be to provide default scaling policies for users who anticipate a significant
+          uptick in metrics generation, or who require zero-downtime should any node go offline.
+        </li>
+        <li>
+          <strong>Grafana dashboard persistence:</strong> Currently, provisioned Grafana dashboards
+          are lost on redeployment. Trickl could persist these dashboards in future releases.
+        </li>
+        <li>
+          <strong>Vmagent config persistence:</strong> Applied vmagent rules are persisted, but on
+          redeployment the user must manually trigger the Smart-Metrics service via the Grafana
+          plugin to reload and apply them. Automating this on startup is the logical next step.
+        </li>
+      </ul>
+
+      <h3 id="fw-cicd">CI / CD</h3>
+      <ul>
+        <li>
+          <strong>Source repository integration:</strong> Implementing workflows for automatically
+          committing cardinality control changes back to the source repository.
+        </li>
+      </ul>
+
+      <h3 id="fw-smart-metrics">Smart-Metrics Service</h3>
+      <ul>
+        <li>
+          <strong>Proactive undo suggestions:</strong> If a user previously dropped a label on a
+          metric and later queries for that label, the SMS should detect the conflict and offer to
+          undo the relevant rule. The ability to undo rules already exists — this would make the
+          system proactively surface that option.
+        </li>
+        <li>
+          <strong>Archive backfill on undo:</strong> When a rule is undone, give the user the
+          option to populate the TSDB with matching data from long-term storage. This means a user
+          who reinstates a previously dropped label can immediately query historical trends rather
+          than waiting for new samples to accumulate.
+        </li>
+        <li>
+          <strong>Post-rule series purge:</strong> Give the user the option to delete time-series
+          associated with a metric that is being aggregated or whose label is being dropped. In
+          most cases the user no longer requires those series; purging them would save storage,
+          improve query performance, and improve the quality of future recommendations.
+        </li>
+        <li>
+          <strong>Expanded AI agent tooling:</strong> Broadening the AI agent's tool set so it can
+          produce richer, more detailed outputs about Trickl's current state across the board.
+        </li>
+      </ul>
     </>
   )
 }
@@ -593,8 +802,11 @@ function CaseStudy() {
 
   const goToSection = (index: number) => {
     setCurrentIndex(index)
-    contentRef.current?.scrollTo({ top: 0 })
   }
+
+  useEffect(() => {
+    contentRef.current?.scrollTo({ top: 0 })
+  }, [currentIndex])
 
   const section = sections[currentIndex]
   const SectionContent = sectionComponents[section.id]
