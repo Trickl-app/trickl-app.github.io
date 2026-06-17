@@ -1,8 +1,8 @@
 import { useLayoutEffect } from 'react'
 import { Link } from 'react-router-dom'
 import tricklIcon from '../assets/blue-transparent_background.svg'
-import archDark from '../assets/home_page_dark.gif'
-import archLight from '../assets/home_page_light.gif'
+import archDark from '../assets/home-page-dark-new.gif'
+import archLight from '../assets/home-page-light-new.gif'
 import Team from './Team'
 import Technologies from './Technologies'
 
@@ -80,7 +80,8 @@ function Home({ theme }: { theme: 'dark' | 'light' }) {
               Metrics<br />Observability<br />in Minutes
             </h1>
             <p className="hero-sub">
-              Open-source metrics observability for small teams; self-hosted on your own infrastructure, with intelligent cardinality control built in.
+              Open-source metrics observability for small teams; self-hosted on your own infrastructure, 
+              with intelligent cardinality control built in.
             </p>
             <Link to="/case-study" className="btn-primary">
               Read our Case Study <span className="btn-arrow">→</span>
@@ -96,7 +97,9 @@ function Home({ theme }: { theme: 'dark' | 'light' }) {
       <section className="arch-section">
         <div className="arch-inner">
           <p className="arch-caption">
-            Trickl deploys a full backend that receives metrics from your instrumented apps, applies intelligent cardinality control recommendations, and surfaces everything through a Grafana front end, all on your own infrastructure.
+            Trickl deploys a full backend that receives metrics from your instrumented apps, applies 
+            intelligent cardinality control recommendations, and surfaces everything through a Grafana 
+            front end, all on your own infrastructure.
           </p>
           <img src={theme === 'dark' ? archDark : archLight} alt="Trickl architecture diagram" className="arch-gif" />
         </div>
