@@ -673,7 +673,6 @@ function DesignDecisionsSection() {
         Vector may still be configured to handle in the future), so vmagent is positioned after
         Vector.
       </p>
-      <div className="cs-placeholder">Image: Vector pipeline diagram</div>
 
       <h3 id="automation">Automation</h3>
       <p>
@@ -721,7 +720,6 @@ function DesignDecisionsSection() {
         Grafana plugin acts as an accessible interface for understanding why suggestions have been
         made and how they relate to the current state of VictoriaMetrics.
       </p>
-      <div className="cs-placeholder">Image: AI agent plugin screenshot</div>
     </>
   )
 }
