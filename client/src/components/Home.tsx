@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import tricklIcon from '../assets/blue-transparent_background.svg'
 import archDark from '../assets/home-page-dark-new.gif'
 import archLight from '../assets/home-page-light-new.gif'
+import cliInstallVideo from '../assets/localhost_cli_install.mp4'
 import Team from './Team'
 import Technologies from './Technologies'
 
@@ -102,6 +103,23 @@ function Home({ theme }: { theme: 'dark' | 'light' }) {
             front end, all on your own infrastructure.
           </p>
           <img src={theme === 'dark' ? archDark : archLight} alt="Trickl architecture diagram" className="arch-gif" />
+        </div>
+      </section>
+
+      <section className="demo-section">
+        <div className="demo-inner">
+          <h2 className="demo-title">Get Started in Minutes</h2>
+          <p className="demo-caption">
+            Install and deploy Trickl with a single CLI command.
+          </p>
+          <video
+            className="demo-video"
+            src={cliInstallVideo}
+            autoPlay
+            loop
+            muted
+            playsInline
+          />
         </div>
       </section>
 

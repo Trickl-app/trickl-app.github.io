@@ -239,9 +239,47 @@
   margin: 0;
 }
 
+/* ── Demo Video ────────────────────────────────────── */
+.demo-section {
+  background: var(--color-bg);
+  padding: 5rem 2rem;
+}
+
+.demo-inner {
+  max-width: 860px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.demo-title {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.demo-caption {
+  text-align: center;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--color-text-muted);
+  max-width: 640px;
+  margin: 0;
+}
+
+.demo-video {
+  width: 100%;
+  max-width: 760px;
+  border-radius: 12px;
+}
+
 /* ── Team ───────────────────────────────────────────── */
 .team-section-bg {
-  background: var(--color-bg);
+  background: var(--navy-mid);
 }
 
 .home-team {
