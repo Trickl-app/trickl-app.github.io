@@ -316,6 +316,10 @@
   display: block;
 }
 
+.team-photo-placeholder {
+  background-color: var(--color-border);
+}
+
 .team-name {
   text-align: center;
   font-size: 1rem;
@@ -356,6 +360,10 @@
   width: 24px;
   height: 24px;
   filter: invert(1);
+}
+
+[data-theme="light"] .team-badge--github {
+  filter: none;
 }
 
 /* ── Case study ─────────────────────────────────────── */

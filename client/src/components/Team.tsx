@@ -3,7 +3,6 @@ import githubLogo from '../assets/github-logo.svg'
 import ianPhoto from '../assets/ian.jpeg'
 import jonPhoto from '../assets/jon.jpeg'
 import nazeerPhoto from '../assets/nazeer.jpeg'
-import syedPhoto from '../assets/syed.jpeg'
 
 function Team() {
   return (
@@ -25,9 +24,9 @@ function Team() {
           </div>
         </div>
         <div className="team-member">
-          <img src={syedPhoto} alt="Syed Shah" className="team-photo-card" />
+          <div className="team-photo-card team-photo-placeholder" />
           <p className="team-name">Syed Shah</p>
-          <p className="team-location">The Shadow Realm</p>
+          <p className="team-location">London, England</p>
           <div className="team-badges">
             <a href="https://www.linkedin.com/in/syed-shah-367a44393/" target="_blank" rel="noreferrer">
               <img src={linkedinLogo} alt="LinkedIn" className="team-badge" />
