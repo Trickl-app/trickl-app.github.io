@@ -5,7 +5,8 @@ import basicBackend from '../assets/basic_backend.gif'
 import timeSeriesEx from '../assets/time-series-ex.png'
 import exampleTimeseriesDist from '../assets/example-timeseries-dist.png'
 import tricklLandscapeComparison from '../assets/trickl-landscape comparison-dark.png'
-import smartmetricsPipeline from '../assets/full-arch.gif'
+import smartmetricsPipelinelight from '../assets/full-arch-light.gif'
+import smartmetricsPipelinedark from '../assets/full-arch-dark.gif'
 import vmagentArch from '../assets/vmagent-arch.png'
 import statefulStateless from '../assets/stateful-stateless.png'
 import promQLQuery from '../assets/promQLQuery.png'
@@ -400,6 +401,16 @@ function DomainChallengesSection() {
 }
 
 function BuildingTricklSection() {
+  const [theme, setTheme] = useState(document.documentElement.getAttribute('data-theme') ?? 'dark')
+
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      setTheme(document.documentElement.getAttribute('data-theme') ?? 'dark')
+    })
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] })
+    return () => observer.disconnect()
+  }, [])
+
   return (
     <>
       <h2>Building the Platform</h2>
@@ -408,7 +419,7 @@ function BuildingTricklSection() {
         pipeline and a Smart-Metrics Service (SMS).
       </p>
       <figure className="cs-figure">
-        <img src={smartmetricsPipeline} alt="Smart Metrics pipeline diagram" className="cs-image" />
+        <img src={theme === 'dark' ? smartmetricsPipelinedark : smartmetricsPipelinelight} alt="Smart Metrics pipeline diagram" className="cs-image" />
         <figcaption className="cs-caption">An overview of Trickl's architecture.</figcaption>
       </figure>
 
