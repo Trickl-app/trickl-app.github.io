@@ -119,6 +119,12 @@ function Home({ theme }: { theme: 'dark' | 'light' }) {
             loop
             muted
             playsInline
+            ref={(el) => {
+              if (el) {
+                el.muted = true
+                el.play().catch(() => {})
+              }
+            }}
           />
         </div>
       </section>
