@@ -4,7 +4,7 @@ import cardinalityExplosionGraph from '../assets/cardinality_explosion_graph.png
 import basicBackend from '../assets/basic_backend.gif'
 import timeSeriesEx from '../assets/time-series-ex.png'
 import exampleTimeseriesDist from '../assets/example-timeseries-dist.png'
-import tricklLandscapeComparison from '../assets/trickl-landscape comparison-dark.png'
+import tricklLandscapeComparison from '../assets/trickl-landscape comparison.png'
 import smartmetricsPipelinelight from '../assets/full-arch-light.gif'
 import smartmetricsPipelinedark from '../assets/full-arch-dark.gif'
 import vmagentArch from '../assets/vmagent-arch.png'
