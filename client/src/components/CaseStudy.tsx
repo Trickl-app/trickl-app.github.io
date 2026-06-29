@@ -589,7 +589,7 @@ function BuildingTricklSection() {
       <p>
         Trickl doesn't currently provide any scaling strategies out of the box, but the nodes are
         defined as autoscaling groups so the user can choose to do so whenever they desire. The default
-        configuration should handle storing between 50-100 billion samples per month, and Smart-Metrics'
+        configuration should handle storing between 25-50 billion samples per month, and Smart-Metrics'
         cardinality-control measures should massively reduce the burden on vminsert and keep overall
         time-series count low, alleviating the burden on vmstorage.
       </p>
